@@ -37,24 +37,26 @@ void CreditCard::setNumber(int userInput[])
 */
 bool CreditCard::validateNum()
 {
+	int luhnArray[SIZE] = {}; //array to store the card numbers changed by the luhn algorithm
 	int cSum = 0; //variable to store the sum of the card numbers
 	//double every other
 	for (int i = 0; i < SIZE;i++)
 	{
+		luhnArray[i] = cArray[i]; //copy all the digits to the new array
 		if (i % 2 == 0) //if the index is even
 		{
-			cArray[i] = 2 * cArray[i]; //multiply the number at that index by 2
+			luhnArray[i] = 2 * luhnArray[i]; //multiply the number at that index by 2
 		}
 	}
 	//sum the digits
 	for (int i = 0; i < SIZE;i++)
 	{
-		if (cArray[i] > 9 && (i % 2) == 0) //adds the digits together if they are two digit numbers
+		if (luhnArray[i] > 9 && (i % 2) == 0) //adds the digits together if they are two digit numbers
 		{
-			int secDigit = cArray[i] % 10;
-			cArray[i] = 1 + secDigit;
+			int secDigit = luhnArray[i] % 10;
+			luhnArray[i] = 1 + secDigit;
 		}
-		cSum += cArray[i];
+		cSum += luhnArray[i];
 	}
 	if (cSum % 10 == 0) //if the sum of the digits are a multiple of 10
 	{
